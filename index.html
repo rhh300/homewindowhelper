@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Home Window Helper — Find the Best Window Contractor Deal</title>
+<meta name="description" content="Compare promotions, financing offers, warranties and ratings across top window replacement contractors — all in one place. Free to use." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Serif+Display&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue:        #185FA5;
+    --blue-dark:   #0C447C;
+    --blue-light:  #E6F1FB;
+    --blue-mid:    #378ADD;
+    --green-light: #EAF3DE;
+    --green-dark:  #27500A;
+    --green-mid:   #3B6D11;
+    --amber:       #BA7517;
+    --amber-light: #FAEEDA;
+    --gray-50:     #F7F6F3;
+    --gray-100:    #EDEDEA;
+    --gray-200:    #D8D7D2;
+    --gray-400:    #9A9993;
+    --gray-600:    #5F5E5A;
+    --gray-900:    #1C1C1A;
+    --text:        #1C1C1A;
+    --text-muted:  #5F5E5A;
+    --text-hint:   #9A9993;
+    --border:      rgba(28,28,26,0.12);
+    --border-med:  rgba(28,28,26,0.22);
+    --radius-sm:   6px;
+    --radius-md:   10px;
+    --radius-lg:   14px;
+    --radius-xl:   20px;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--gray-50);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.3px;
+  }
+  .logo span { color: var(--blue); }
+  .nav-tagline {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.5px;
+  }
+  .hero h1 em { color: var(--blue); font-style: normal; }
+  .hero p {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.6;
+  }
+  .hero-lock-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--blue-light);
+    color: var(--blue-dark);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 14px;
+    border-radius: 100px;
+    cursor: pointer;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.15s;
+  }
+  .hero-lock-note:hover { background: #cfe1f6; }
+  .lock-icon { font-size: 14px; }
+
+  /* ── MAIN LAYOUT ── */
+  .page-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 1.25rem;
+  }
+  .results-meta { font-size: 13px; color: var(--text-muted); }
+  .results-meta strong { color: var(--text); font-weight: 500; }
+  .view-toggle { display: flex; gap: 6px; }
+  .view-btn {
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    padding: 5px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-med);
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .view-btn.active {
+    background: var(--text);
+    color: #fff;
+    border-color: var(--text);
+  }
+
+  /* ── UNLOCK BANNER ── */
+  .unlock-banner {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    background: var(--green-light);
+    color: var(--green-dark);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    margin-bottom: 1.25rem;
+    border: 1px solid #b5d98a;
+  }
+  .unlock-banner.visible { display: flex; }
+
+  /* ── COMPARE BAR ── */
+  .compare-bar {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid var(--border-med);
+    border-radius: var(--radius-lg);
+    padding: 12px 16px;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .compare-bar.visible { display: flex; }
+  .compare-bar-label { font-size: 13px; font-weight: 500; color: var(--text); white-space: nowrap; }
+  .compare-slots { display: flex; gap: 7px; flex-wrap: wrap; }
+  .compare-slot {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gray-100);
+    border-radius: var(--radius-sm);
+    padding: 4px 10px;
+    font-size: 12px;
+    color: var(--text);
+    max-width: 180px;
+  }
+  .slot-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .slot-remove { cursor: pointer; color: var(--text-muted); font-size: 16px; line-height: 1; flex-shrink: 0; }
+  .slot-remove:hover { color: var(--text); }
+  .slot-empty {
+    font-size: 12px;
+    color: var(--text-hint);
+    padding: 4px 10px;
+    border: 1px dashed var(--gray-200);
+    border-radius: var(--radius-sm);
+  }
+  .compare-go-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 18px;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s;
+  }
+  .compare-go-btn:hover:not(:disabled) { background: var(--blue-dark); }
+  .compare-go-btn:disabled { background: var(--gray-200); color: var(--text-hint); cursor: not-allowed; }
+
+  /* ── CARD GRID ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 14px;
+    margin-bottom: 1.5rem;
+  }
+
+  .c-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.15rem 1.25rem;
+    transition: border-color 0.15s, transform 0.15s;
+    position: relative;
+  }
+  .c-card:hover { border-color: var(--border-med); transform: translateY(-1px); }
+  .c-card.selected { border: 2px solid var(--blue); }
+
+  .card-top-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .card-rank {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-hint);
+    letter-spacing: 0.4px;
+  }
+  .featured-badge {
+    font-size: 10px;
+    font-weight: 500;
+    background: var(--blue-light);
+    color: var(--blue-dark);
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+  .compare-check-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--text-muted);
+    cursor: pointer;
+    user-select: none;
+  }
+  .compare-check-label input { cursor: pointer; accent-color: var(--blue); }
+
+  .card-identity { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .avatar {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    background: var(--blue-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 500; color: var(--blue-dark);
+    flex-shrink: 0;
+    transition: filter 0.2s;
+  }
+  .avatar.blurred { filter: blur(5px); }
+  .c-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    transition: filter 0.2s;
+  }
+  .c-name.blurred { filter: blur(7px); border-radius: 4px; }
+
+  .card-rating { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+  .stars { color: #E9A800; font-size: 13px; letter-spacing: 1px; }
+  .rating-val { font-size: 13px; font-weight: 500; color: var(--text); }
+  .rating-ct { font-size: 12px; color: var(--text-muted); }
+
+  .card-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .stat-box {
+    background: var(--gray-50);
+    border-radius: var(--radius-sm);
+    padding: 7px 9px;
+    border: 1px solid var(--border);
+  }
+  .stat-lbl { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .stat-val { font-size: 12px; font-weight: 500; color: var(--text); line-height: 1.3; }
+
+  .card-offer {
+    font-size: 12px;
+    background: var(--green-light);
+    color: var(--green-dark);
+    padding: 7px 10px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 7px;
+    line-height: 1.45;
+    font-weight: 500;
+  }
+  .card-financing {
+    font-size: 12px;
+    background: var(--blue-light);
+    color: var(--blue-dark);
+    padding: 7px 10px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 7px;
+    line-height: 1.45;
+  }
+  .card-expires {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .card-expires .exp-date { color: var(--amber); font-weight: 500; }
+
+  .card-cta {
+    width: 100%;
+    padding: 8px;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .card-cta:hover { background: var(--blue-dark); }
+
+  /* ── LIST VIEW ── */
+  .list-view { display: none; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
+  .list-view.active { display: flex; }
+  .card-grid.active { display: grid; }
+  .card-grid.inactive { display: none; }
+
+  .list-header {
+    display: grid;
+    grid-template-columns: 30px 140px 1fr 110px 110px 110px 120px;
+    gap: 10px;
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+  }
+  .list-row {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    display: grid;
+    grid-template-columns: 30px 140px 1fr 110px 110px 110px 120px;
+    gap: 10px;
+    padding: 12px 14px;
+    align-items: center;
+    transition: border-color 0.15s;
+  }
+  .list-row:hover { border-color: var(--border-med); }
+  .list-row.selected { border: 2px solid var(--blue); }
+  .list-rank { font-size: 12px; color: var(--text-hint); font-weight: 500; }
+  .list-name { font-size: 13px; font-weight: 500; color: var(--text); transition: filter 0.2s; }
+  .list-name.blurred { filter: blur(6px); }
+  .list-offer { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+  .list-cell { font-size: 12px; color: var(--text); }
+  .list-expires { font-size: 12px; color: var(--amber); font-weight: 500; }
+  .list-cta-btn {
+    padding: 5px 12px;
+    background: transparent;
+    border: 1px solid var(--border-med);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .list-cta-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+  /* ── GATE OVERLAY ── */
+  .gate-wrap {
+    display: none;
+    position: relative;
+    margin-bottom: 1.5rem;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+  }
+  .gate-wrap.visible { display: block; }
+  .gate-backdrop {
+    background: rgba(15,15,15,0.55);
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: var(--radius-xl);
+  }
+  .gate-card {
+    background: #fff;
+    border-radius: var(--radius-xl);
+    padding: 2rem 2rem 1.5rem;
+    width: 100%;
+    max-width: 380px;
+  }
+  .gate-icon {
+    width: 42px; height: 42px;
+    background: var(--blue-light);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 1rem;
+  }
+  .gate-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+  .gate-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+  }
+  .gate-field { margin-bottom: 10px; }
+  .gate-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .gate-field input {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    border: 1px solid var(--border-med);
+    border-radius: var(--radius-sm);
+    outline: none;
+    color: var(--text);
+    background: #fff;
+    transition: border-color 0.15s;
+  }
+  .gate-field input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(24,95,165,0.1); }
+  .gate-submit {
+    width: 100%;
+    padding: 11px;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    margin-top: 0.75rem;
+    transition: background 0.15s;
+  }
+  .gate-submit:hover { background: var(--blue-dark); }
+  .gate-disclaimer {
+    font-size: 11px;
+    color: var(--text-hint);
+    text-align: center;
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+  .gate-close {
+    float: right;
+    font-size: 20px;
+    color: var(--text-muted);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: sans-serif;
+    line-height: 1;
+    margin-top: -4px;
+  }
+  .gate-close:hover { color: var(--text); }
+
+  /* ── COMPARE PANEL ── */
+  .compare-wrap {
+    display: none;
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+  .compare-wrap.visible { display: block; }
+  .compare-backdrop {
+    background: rgba(15,15,15,0.5);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    min-height: 400px;
+  }
+  .compare-panel {
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+  }
+  .compare-panel-hdr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+  .compare-panel-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--text);
+  }
+  .close-compare {
+    background: none;
+    border: none;
+    font-size: 22px;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: sans-serif;
+    line-height: 1;
+  }
+  .close-compare:hover { color: var(--text); }
+  .compare-tbl-wrap { overflow-x: auto; }
+  .compare-tbl {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .compare-tbl th {
+    text-align: center;
+    padding: 10px 14px;
+    font-weight: 500;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .compare-tbl th.row-hdr { text-align: left; font-size: 12px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+  .compare-tbl td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+    vertical-align: top;
+    font-size: 12px;
+  }
+  .compare-tbl td.val {
+    text-align: center;
+    color: var(--text);
+    font-size: 13px;
+  }
+  .compare-tbl td.blurred-val { filter: blur(6px); user-select: none; text-align: center; }
+  .compare-tbl tr:last-child td { border-bottom: none; }
+  .best-pill {
+    display: inline-block;
+    background: var(--green-light);
+    color: var(--green-dark);
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 100px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .offer-pill {
+    display: inline-block;
+    background: var(--green-light);
+    color: var(--green-dark);
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    line-height: 1.4;
+  }
+  .financing-pill {
+    display: inline-block;
+    background: var(--blue-light);
+    color: var(--blue-dark);
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: var(--radius-sm);
+    line-height: 1.4;
+  }
+  .compare-back-btn {
+    margin-top: 1rem;
+    padding: 8px 18px;
+    background: var(--blue);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    float: right;
+    transition: background 0.15s;
+  }
+  .compare-back-btn:hover { background: var(--blue-dark); }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    background: #fff;
+    line-height: 1.7;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .c-card, .list-row {
+    animation: fadeUp 0.35s ease both;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    nav { padding: 0 1rem; }
+    .nav-tagline { display: none; }
+    .hero { padding: 2rem 1rem 1.5rem; }
+    .page-wrap { padding: 1.25rem 1rem 3rem; }
+    .list-header, .list-row { grid-template-columns: 24px 1fr 80px; }
+    .list-header .hide-mobile, .list-row .hide-mobile { display: none; }
+    .compare-bar { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#">Home Window <span>Helper</span></a>
+  <span class="nav-tagline">Compare top window contractors</span>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>Find the best window deal<br><em>before you call anyone</em></h1>
+  <p>We track promotions, financing offers, ratings, and warranty info across the top window contractors — so you can compare before you commit.</p>
+  <button class="hero-lock-note" onclick="showGate()">
+    <span class="lock-icon">🔒</span>
+    Unlock contractor names — it's free
+  </button>
+</div>
+
+<!-- MAIN -->
+<div class="page-wrap">
+
+  <!-- UNLOCK BANNER -->
+  <div class="unlock-banner" id="unlock-banner">
+    ✓ &nbsp;Results unlocked — all contractor names and details are now visible.
+  </div>
+
+  <!-- GATE OVERLAY -->
+  <div class="gate-wrap" id="gate-wrap">
+    <div class="gate-backdrop">
+      <div class="gate-card">
+        <button class="gate-close" onclick="hideGate()">×</button>
+        <div class="gate-icon">🔓</div>
+        <div class="gate-title">Unlock all results</div>
+        <div class="gate-sub">Enter your details to see which companies are behind these deals — and get matched with the best one for your project.</div>
+        <div class="gate-field"><label>Your name</label><input type="text" id="g-name" placeholder="Jane Smith" /></div>
+        <div class="gate-field"><label>Email address</label><input type="email" id="g-email" placeholder="jane@example.com" /></div>
+        <div class="gate-field"><label>Phone number</label><input type="tel" id="g-phone" placeholder="(555) 000-0000" /></div>
+        <div class="gate-field"><label>Zip code</label><input type="text" id="g-zip" placeholder="45202" /></div>
+        <button class="gate-submit" onclick="unlock()">Reveal all results →</button>
+        <div class="gate-disclaimer">By submitting, you may be contacted by matching contractors in your area. We never sell your data to unrelated parties.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARE OVERLAY -->
+  <div class="compare-wrap" id="compare-wrap">
+    <div class="compare-backdrop">
+      <div class="compare-panel">
+        <div class="compare-panel-hdr">
+          <div class="compare-panel-title">Side-by-side comparison</div>
+          <button class="close-compare" onclick="closeCompare()">×</button>
+        </div>
+        <div class="compare-tbl-wrap">
+          <table class="compare-tbl" id="compare-tbl"></table>
+        </div>
+        <div style="overflow:hidden;">
+          <button class="compare-back-btn" onclick="closeCompare()">Back to results</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="results-meta" id="results-meta">Showing <strong>11 contractors</strong> with active promotions</div>
+    <div class="view-toggle">
+      <button class="view-btn active" id="btn-grid" onclick="setView('grid')">&#9646;&#9646; Cards</button>
+      <button class="view-btn" id="btn-list" onclick="setView('list')">&#9776; List</button>
+    </div>
+  </div>
+
+  <!-- COMPARE BAR -->
+  <div class="compare-bar" id="compare-bar">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex:1;">
+      <span class="compare-bar-label">Comparing:</span>
+      <div class="compare-slots" id="compare-slots"></div>
+    </div>
+    <button class="compare-go-btn" id="compare-go-btn" onclick="openCompare()">Compare selected</button>
+  </div>
+
+  <!-- CARD GRID -->
+  <div class="card-grid active" id="card-grid"></div>
+
+  <!-- LIST VIEW -->
+  <div class="list-view" id="list-view">
+    <div class="list-header">
+      <span>#</span>
+      <span>Company</span>
+      <span>Current offer</span>
+      <span class="hide-mobile">Warranty</span>
+      <span class="hide-mobile">Coverage</span>
+      <span class="hide-mobile">Expires</span>
+      <span></span>
+    </div>
+  </div>
+
+  <footer class="site-footer" style="margin-top:2rem;border-radius:var(--radius-lg);">
+    Ratings sourced from Google. Offers verified weekly — last updated March 2026.<br>
+    Home Window Helper is not affiliated with any listed contractor. Always verify offers directly with the company.
+  </footer>
+
+</div>
+
+<!-- SITE FOOTER -->
+<div class="site-footer">
+  &copy; 2026 Home Window Helper &nbsp;·&nbsp; Not affiliated with any contractor &nbsp;·&nbsp; <a href="#" style="color:var(--blue);text-decoration:none;">Privacy policy</a>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+// To update: edit the values below. Each object is one contractor row.
+// Fields: initials, name, url, offer, financing, expires, warranty, states, rating
+const contractors = [
+  {
+    id: 1,
+    initials: 'WS',
+    name: 'West Shore Home',
+    url: 'https://westshorehome.com/replacement-windows/',
+    offer: 'Free Install + $1,000 Off 12+ Windows',
+    financing: '18 Months No Interest & No Money Down',
+    expires: 'Apr 4, 2026',
+    warranty: 'Limited lifetime',
+    states: '~20+ states',
+    rating: 5.0,
+    featured: false,
+  },
+  {
+    id: 2,
+    initials: 'WN',
+    name: 'Window Nation',
+    url: 'https://www.windownation.com/',
+    offer: 'Save Up to 50% Off Your New Window Project',
+    financing: '$0 down, 0% promos available',
+    expires: '',
+    warranty: 'Lifetime',
+    states: '~30+ markets',
+    rating: 4.8,
+    featured: false,
+  },
+  {
+    id: 3,
+    initials: 'RA',
+    name: 'Renewal by Andersen',
+    url: 'https://www.renewalbyandersen.com/',
+    offer: 'No Money Down, No Payments, No Interest for 18 Months',
+    financing: 'Financing available',
+    expires: 'Mar 31, 2026',
+    warranty: '20-year glass / limited',
+    states: 'Nationwide',
+    rating: 4.5,
+    featured: true,
+  },
+  {
+    id: 4,
+    initials: 'CH',
+    name: 'Champion',
+    url: 'https://www.championwindow.com/',
+    offer: 'Buy 2 Windows, Get 2 FREE',
+    financing: 'Financing available',
+    expires: 'Mar 31, 2026',
+    warranty: 'Limited lifetime',
+    states: 'Nationwide',
+    rating: 4.7,
+    featured: false,
+  },
+  {
+    id: 5,
+    initials: 'UW',
+    name: 'Universal Windows Direct',
+    url: 'https://www.universalwindowsdirect.com/replacement-windows/',
+    offer: 'Buy 2 Windows, get 2 of equal or lesser value free',
+    financing: '$0 down promos available',
+    expires: 'May 31, 2026',
+    warranty: 'True Lifetime',
+    states: '~20+ states',
+    rating: 4.6,
+    featured: false,
+  },
+  {
+    id: 6,
+    initials: 'MC',
+    name: 'Mad City',
+    url: 'https://madcitywindows.com/',
+    offer: '70% Off Labor',
+    financing: '18 Months No Interest, No Payments',
+    expires: 'Mar 31, 2026',
+    warranty: 'Limited lifetime',
+    states: '~10–15 states',
+    rating: 4.7,
+    featured: false,
+  },
+  {
+    id: 7,
+    initials: 'FW',
+    name: 'Florida Window & Door',
+    url: 'https://www.floridawindowanddoor.com/',
+    offer: 'Buy 2 Get 2 Free',
+    financing: 'No Interest, No Payments for 12 Months',
+    expires: '',
+    warranty: 'Lifetime',
+    states: 'Florida',
+    rating: 4.7,
+    featured: false,
+  },
+  {
+    id: 8,
+    initials: 'HG',
+    name: 'Home Genius Exteriors',
+    url: 'https://homegeniusexteriors.com/',
+    offer: '50% Off Materials',
+    financing: 'No Payments Until 2027',
+    expires: 'Mar 31, 2026',
+    warranty: 'Lifetime workmanship',
+    states: '~10+ states',
+    rating: 4.6,
+    featured: false,
+  },
+  {
+    id: 9,
+    initials: 'TC',
+    name: 'Thompson Creek Windows',
+    url: 'https://thompsoncreek.com/',
+    offer: '25% Off Windows',
+    financing: 'Financing available',
+    expires: '',
+    warranty: 'Lifetime',
+    states: '~5 states',
+    rating: 4.6,
+    featured: false,
+  },
+  {
+    id: 10,
+    initials: 'ZX',
+    name: 'Zintex',
+    url: 'https://www.zintex.com/',
+    offer: '$2,500 Off When You Replace 10+ Windows',
+    financing: 'Financing available',
+    expires: 'Mar 31, 2026',
+    warranty: 'Lifetime',
+    states: 'Regional',
+    rating: 4.7,
+    featured: false,
+  },
+  {
+    id: 11,
+    initials: 'DB',
+    name: 'DaBella',
+    url: 'https://dabella.us/',
+    offer: '10% Off Windows',
+    financing: '0% financing for 60 months',
+    expires: 'Apr 2, 2026',
+    warranty: 'Limited lifetime',
+    states: '~15+ states',
+    rating: 4.5,
+    featured: false,
+  },
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let unlocked = false;
+let selected = new Set();
+let currentView = 'grid';
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function starStr(r) {
+  const full = Math.floor(r);
+  const half = (r - full) >= 0.5;
+  let s = '★'.repeat(full);
+  if (half) s += '½';
+  while (s.replace('½','x').length < 5) s += '☆';
+  return s;
+}
+
+function blurCls(cls) { return unlocked ? cls : cls + ' blurred'; }
+
+// ── RENDER CARDS ──────────────────────────────────────────────────────────────
+function renderCards() {
+  const grid = document.getElementById('card-grid');
+  grid.innerHTML = '';
+  contractors.forEach((c, i) => {
+    const isSel = selected.has(c.id);
+    const delay = (i * 40) + 'ms';
+    const card = document.createElement('div');
+    card.className = 'c-card' + (isSel ? ' selected' : '');
+    card.id = 'card-' + c.id;
+    card.style.animationDelay = delay;
+    card.innerHTML = `
+      <div class="card-top-row">
+        <div style="display:flex;align-items:center;gap:7px;">
+          <span class="card-rank">#${i + 1}</span>
+          ${c.featured ? '<span class="featured-badge">Most reviewed</span>' : ''}
+        </div>
+        <label class="compare-check-label">
+          <input type="checkbox" ${isSel ? 'checked' : ''} onchange="toggleSelect(${c.id}, this.checked)" />
+          Compare
+        </label>
+      </div>
+      <div class="card-identity">
+        <div class="${blurCls('avatar')}">${c.initials}</div>
+        <div class="${blurCls('c-name')}">${c.name}</div>
+      </div>
+      <div class="card-rating">
+        <span class="stars">${starStr(c.rating)}</span>
+        <span class="rating-val">${c.rating.toFixed(1)}</span>
+        <span class="rating-ct">Google rating</span>
+      </div>
+      <div class="card-stats">
+        <div class="stat-box"><div class="stat-lbl">Warranty</div><div class="stat-val">${c.warranty}</div></div>
+        <div class="stat-box"><div class="stat-lbl">Coverage</div><div class="stat-val">${c.states}</div></div>
+      </div>
+      ${c.offer ? `<div class="card-offer">${c.offer}</div>` : ''}
+      ${c.financing ? `<div class="card-financing">${c.financing}</div>` : ''}
+      <div class="card-expires">${c.expires ? 'Offer ends: <span class="exp-date">' + c.expires + '</span>' : 'No listed end date'}</div>
+      <button class="card-cta" onclick="showGate()">See contractor →</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ── RENDER LIST ───────────────────────────────────────────────────────────────
+function renderList() {
+  const list = document.getElementById('list-view');
+  const existingRows = list.querySelectorAll('.list-row');
+  existingRows.forEach(r => r.remove());
+
+  contractors.forEach((c, i) => {
+    const isSel = selected.has(c.id);
+    const row = document.createElement('div');
+    row.className = 'list-row' + (isSel ? ' selected' : '');
+    row.id = 'list-' + c.id;
+    row.innerHTML = `
+      <span class="list-rank">${i + 1}</span>
+      <div>
+        <div class="${blurCls('list-name')}">${c.name}</div>
+        <div style="display:flex;align-items:center;gap:4px;margin-top:3px;">
+          <span style="color:#E9A800;font-size:11px;">${starStr(c.rating)}</span>
+          <span style="font-size:11px;color:var(--text-muted);">${c.rating.toFixed(1)}</span>
+        </div>
+      </div>
+      <div class="list-offer">${c.offer || c.financing || '—'}</div>
+      <div class="list-cell hide-mobile">${c.warranty}</div>
+      <div class="list-cell hide-mobile">${c.states}</div>
+      <div class="list-expires hide-mobile">${c.expires || '—'}</div>
+      <button class="list-cta-btn" onclick="showGate()">Unlock →</button>
+    `;
+    list.appendChild(row);
+  });
+}
+
+// ── SELECT / COMPARE BAR ──────────────────────────────────────────────────────
+function toggleSelect(id, checked) {
+  if (checked && selected.size >= 3) {
+    const cb = document.querySelector('#card-' + id + ' input[type=checkbox], #list-' + id + ' input[type=checkbox]');
+    if (cb) cb.checked = false;
+    return;
+  }
+  if (checked) selected.add(id); else selected.delete(id);
+  renderAll();
+  updateCompareBar();
+}
+
+function updateCompareBar() {
+  const bar = document.getElementById('compare-bar');
+  const slots = document.getElementById('compare-slots');
+  const btn = document.getElementById('compare-go-btn');
+  if (selected.size === 0) { bar.classList.remove('visible'); return; }
+  bar.classList.add('visible');
+  slots.innerHTML = '';
+  selected.forEach(id => {
+    const c = contractors.find(x => x.id === id);
+    const slot = document.createElement('div');
+    slot.className = 'compare-slot';
+    slot.innerHTML = `<span class="slot-name">${unlocked ? c.name : c.initials + '...'}</span><span class="slot-remove" onclick="toggleSelect(${id}, false)">×</span>`;
+    slots.appendChild(slot);
+  });
+  for (let i = selected.size; i < 3; i++) {
+    const empty = document.createElement('div');
+    empty.className = 'slot-empty';
+    empty.textContent = '+ add more';
+    slots.appendChild(empty);
+  }
+  btn.disabled = selected.size < 2;
+}
+
+// ── COMPARE PANEL ─────────────────────────────────────────────────────────────
+function openCompare() {
+  const sel = contractors.filter(c => selected.has(c.id));
+  const tbl = document.getElementById('compare-tbl');
+  const bestRating = Math.max(...sel.map(c => c.rating));
+
+  const rows = [
+    { label: 'Google rating',  fn: c => c.rating.toFixed(1), best: c => c.rating === bestRating, blur: false },
+    { label: 'Warranty',       fn: c => c.warranty, best: () => false, blur: false },
+    { label: 'Coverage area',  fn: c => c.states, best: () => false, blur: false },
+    { label: 'Current offer',  fn: c => c.offer ? `<span class="offer-pill">${c.offer}</span>` : '—', best: () => false, blur: false },
+    { label: 'Financing',      fn: c => c.financing ? `<span class="financing-pill">${c.financing}</span>` : '—', best: () => false, blur: false },
+    { label: 'Offer expires',  fn: c => c.expires || 'No end date', best: () => false, blur: false },
+  ];
+
+  let html = '<thead><tr><th class="row-hdr" style="width:130px;">Category</th>';
+  sel.forEach(c => {
+    html += `<th>${unlocked ? c.name : '<span style="filter:blur(6px);user-select:none;">' + c.name + '</span>'}</th>`;
+  });
+  html += '</tr></thead><tbody>';
+
+  rows.forEach(row => {
+    html += `<tr><td class="row-hdr" style="color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:0.3px;">${row.label}</td>`;
+    sel.forEach(c => {
+      const isBest = row.best(c);
+      html += `<td class="val">${row.fn(c)}${isBest ? '<span class="best-pill">Best</span>' : ''}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody>';
+  tbl.innerHTML = html;
+
+  document.getElementById('compare-wrap').classList.add('visible');
+  document.getElementById('compare-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeCompare() {
+  document.getElementById('compare-wrap').classList.remove('visible');
+}
+
+// ── GATE ──────────────────────────────────────────────────────────────────────
+function showGate() {
+  if (unlocked) return;
+  document.getElementById('gate-wrap').classList.add('visible');
+  document.getElementById('gate-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function hideGate() {
+  document.getElementById('gate-wrap').classList.remove('visible');
+}
+
+function unlock() {
+  unlocked = true;
+  document.getElementById('gate-wrap').classList.remove('visible');
+  document.getElementById('unlock-banner').classList.add('visible');
+  document.querySelector('.hero-lock-note').style.display = 'none';
+  renderAll();
+  updateCompareBar();
+
+  // ── FORM SUBMISSION ───────────────────────────────────────────────────────
+  // To capture leads, replace YOUR_FORMSPREE_ID below with your Formspree form ID.
+  // Sign up free at https://formspree.io — you'll get an ID like "xpzgkrqw".
+  // Then uncomment the fetch block below.
+  //
+  // const formData = {
+  //   name:  document.getElementById('g-name').value,
+  //   email: document.getElementById('g-email').value,
+  //   phone: document.getElementById('g-phone').value,
+  //   zip:   document.getElementById('g-zip').value,
+  // };
+  // fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+  //   method: 'POST',
+  //   headers: { 'Content-Type': 'application/json' },
+  //   body: JSON.stringify(formData),
+  // });
+}
+
+// ── VIEW TOGGLE ───────────────────────────────────────────────────────────────
+function setView(mode) {
+  currentView = mode;
+  document.getElementById('card-grid').className = 'card-grid ' + (mode === 'grid' ? 'active' : 'inactive');
+  document.getElementById('list-view').className = 'list-view ' + (mode === 'list' ? 'active' : '');
+  document.getElementById('btn-grid').className = 'view-btn ' + (mode === 'grid' ? 'active' : '');
+  document.getElementById('btn-list').className = 'view-btn ' + (mode === 'list' ? 'active' : '');
+}
+
+// ── RENDER ALL ────────────────────────────────────────────────────────────────
+function renderAll() {
+  renderCards();
+  renderList();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderAll();
+updateCompareBar();
+</script>
+</body>
+</html>
