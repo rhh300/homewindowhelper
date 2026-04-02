@@ -389,18 +389,19 @@
   .list-cell { font-size: 12px; color: var(--text); }
   .list-expires { font-size: 12px; color: var(--amber); font-weight: 500; }
   .list-cta-btn {
-    padding: 5px 12px;
-    background: transparent;
-    border: 1px solid var(--border-med);
+    padding: 8px 12px;
+    background: #185FA5;
+    border: none;
     border-radius: var(--radius-sm);
-    font-size: 12px;
+    font-size: 13px;
     font-family: 'DM Sans', sans-serif;
-    color: var(--text);
+    color: #fff;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: opacity 0.15s;
     white-space: nowrap;
+    text-align: center;
   }
-  .list-cta-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+  .list-cta-btn:hover { opacity: 0.88; }
 
   /* ── GATE OVERLAY ── */
   .gate-wrap {
@@ -650,6 +651,7 @@
     .list-header span:last-child { display: none; }
     .list-row { grid-template-columns: 24px 1fr; grid-template-rows: auto auto; }
     .list-row .hide-mobile { display: none; }
+    .list-row .list-offer { grid-column: 1 / -1; }
     .list-cta-btn { grid-column: 1 / -1; width: 100%; box-sizing: border-box; padding: 8px 12px; }
     .compare-bar { flex-direction: column; align-items: flex-start; }
   }
@@ -998,7 +1000,7 @@ function renderList() {
       <div class="list-cell hide-mobile">${c.warranty}</div>
       <div class="list-cell hide-mobile">${c.states}</div>
       <div class="list-expires hide-mobile">${c.expires || '—'}</div>
-      <button class="list-cta-btn" onclick="showGate()">Unlock →</button>
+      <button class="list-cta-btn" onclick="showGate()">See contractor →</button>
     `;
     list.appendChild(row);
   });
