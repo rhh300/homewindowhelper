@@ -646,9 +646,7 @@
     .nav-tagline { display: none; }
     .hero { padding: 2rem 1rem 1.5rem; }
     .page-wrap { padding: 1.25rem 1rem 3rem; }
-    .list-header { grid-template-columns: 24px 1fr; }
-    .list-header .hide-mobile { display: none; }
-    .list-header span:last-child { display: none; }
+    .list-header { display: none; }
     .list-row { grid-template-columns: 24px 1fr; grid-template-rows: auto auto; }
     .list-row .hide-mobile { display: none; }
     .list-row .list-offer { grid-column: 1 / -1; }
@@ -990,7 +988,13 @@ function renderList() {
     row.innerHTML = `
       <span class="list-rank">${i + 1}</span>
       <div>
-        <div class="${blurCls('list-name')}">${c.name}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+          <div class="${blurCls('list-name')}">${c.name}</div>
+          <label class="compare-check-label">
+            <input type="checkbox" ${isSel ? 'checked' : ''} onchange="toggleSelect(${c.id}, this.checked)" />
+            Compare
+          </label>
+        </div>
         <div style="display:flex;align-items:center;gap:4px;margin-top:3px;">
           <span style="color:#E9A800;font-size:11px;">${starStr(c.rating)}</span>
           <span style="font-size:11px;color:var(--text-muted);">${c.rating.toFixed(1)}</span>
