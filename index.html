@@ -982,13 +982,13 @@ function renderCards() {
         <span class="rating-val">${c.rating.toFixed(1)}</span>
         <span class="rating-ct">Google rating</span>
       </div>
+      ${c.offer ? `<div class="card-offer">${c.offer}</div>` : ''}
+      ${c.financing ? `<div class="card-financing">${c.financing}</div>` : ''}
+      <div class="card-expires">${c.expires ? 'Offer ends: <span class="exp-date">' + c.expires + '</span>' : 'No listed end date'}</div>
       <div class="card-stats">
         <div class="stat-box"><div class="stat-lbl">Warranty</div><div class="stat-val">${c.warranty}</div></div>
         <div class="stat-box"><div class="stat-lbl">Coverage</div><div class="stat-val">${c.states}</div></div>
       </div>
-      ${c.offer ? `<div class="card-offer">${c.offer}</div>` : ''}
-      ${c.financing ? `<div class="card-financing">${c.financing}</div>` : ''}
-      <div class="card-expires">${c.expires ? 'Offer ends: <span class="exp-date">' + c.expires + '</span>' : 'No listed end date'}</div>
       <button class="card-cta" onclick="showGate()">See contractor →</button>
     `;
     grid.appendChild(card);
