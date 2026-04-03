@@ -70,6 +70,8 @@
 
   .unlock-banner { display: none; align-items: center; gap: 8px; background: var(--green-light); color: var(--green-dark); font-size: 13px; font-weight: 500; padding: 10px 14px; border-radius: var(--radius-md); margin-bottom: 1.25rem; border: 1px solid #b5d98a; }
   .unlock-banner.visible { display: flex; }
+  .confirm-banner { display: none; background: #f0f6ff; color: var(--text); font-size: 13px; line-height: 1.5; padding: 12px 16px; border-radius: var(--radius-md); margin-bottom: 1.25rem; border: 1px solid #c5d9f5; }
+  .confirm-banner.visible { display: block; }
 
   .compare-bar { display: none; align-items: center; justify-content: space-between; gap: 12px; background: #fff; border-top: 1px solid var(--border-med); padding: 12px 24px; flex-wrap: wrap; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; box-shadow: 0 -2px 12px rgba(0,0,0,0.06); }
   .compare-bar.visible { display: flex; }
@@ -119,11 +121,10 @@
   .list-view.active { display: flex; }
   .card-grid.active { display: grid; }
   .card-grid.inactive { display: none; }
-  .list-header { display: grid; grid-template-columns: 30px 140px 1fr 110px 110px 110px 120px; gap: 10px; padding: 6px 14px; font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.4px; text-transform: uppercase; border-bottom: 1px solid var(--border); align-items: center; }
-  .list-row { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-md); display: grid; grid-template-columns: 30px 140px 1fr 110px 110px 110px 120px; gap: 10px; padding: 12px 14px; align-items: center; transition: border-color 0.15s; }
+  .list-header { display: grid; grid-template-columns: 140px 1fr 110px 110px 110px 120px; gap: 10px; padding: 6px 14px; font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.4px; text-transform: uppercase; border-bottom: 1px solid var(--border); align-items: center; }
+  .list-row { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-md); display: grid; grid-template-columns: 140px 1fr 110px 110px 110px 120px; gap: 10px; padding: 12px 14px; align-items: center; transition: border-color 0.15s; }
   .list-row:hover { border-color: var(--border-med); }
   .list-row.selected { border: 2px solid var(--blue); }
-  .list-rank { font-size: 12px; color: var(--text-hint); font-weight: 500; }
   .list-name { font-size: 13px; font-weight: 500; color: var(--text); transition: filter 0.2s; }
   .list-name.blurred { filter: blur(6px); }
   .list-offer { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
@@ -181,7 +182,7 @@
     .hero { padding: 2rem 1rem 1.5rem; }
     .page-wrap { padding: 1.25rem 1rem 5rem; }
     .list-header { display: none; }
-    .list-row { grid-template-columns: 24px 1fr; grid-template-rows: auto auto; }
+    .list-row { grid-template-columns: 1fr; grid-template-rows: auto auto; }
     .list-row .hide-mobile { display: none; }
     .list-row .list-offer { grid-column: 1 / -1; }
     .list-cta-btn { grid-column: 1 / -1; width: 100%; box-sizing: border-box; padding: 8px 12px; }
@@ -209,6 +210,9 @@
 
   <div class="unlock-banner" id="unlock-banner">
     ✓ &nbsp;Results unlocked — all contractor names and details are now visible.
+  </div>
+  <div class="confirm-banner" id="confirm-banner">
+    <strong>You're all set!</strong> Window contractors in your area may reach out within 24 hours. In the meantime, explore the deals below.
   </div>
 
   <div class="gate-wrap" id="gate-wrap">
@@ -279,7 +283,6 @@
 
     <div class="list-view" id="list-view">
       <div class="list-header">
-        <span>#</span>
         <span>Company</span>
         <span>Current offer</span>
         <span class="hide-mobile">Warranty</span>
@@ -361,7 +364,6 @@ function renderCards() {
     card.innerHTML = `
       <div class="card-top-row">
         <div style="display:flex;align-items:center;gap:7px;">
-          <span class="card-rank">#${i + 1}</span>
           ${c.featured ? '<span class="featured-badge">Most reviewed</span>' : ''}
         </div>
         <label class="compare-check-label">
@@ -401,7 +403,6 @@ function renderList() {
     row.className = 'list-row' + (isSel ? ' selected' : '');
     row.id = 'list-' + c.id;
     row.innerHTML = `
-      <span class="list-rank">${i + 1}</span>
       <div>
         <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
           <div class="${blurCls('list-name')}">${c.name}</div>
@@ -507,6 +508,7 @@ function unlock() {
   unlocked = true;
   document.getElementById('gate-wrap').classList.remove('visible');
   document.getElementById('unlock-banner').classList.add('visible');
+  document.getElementById('confirm-banner').classList.add('visible');
   document.querySelector('.hero-lock-note').style.display = 'none';
   renderAll();
   updateCompareBar();
