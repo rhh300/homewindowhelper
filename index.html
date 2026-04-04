@@ -516,6 +516,7 @@ function unlock() {
   document.querySelector('.hero-lock-note').style.display = 'none';
   renderAll();
   updateCompareBar();
+  if (document.getElementById('compare-wrap').classList.contains('visible')) openCompare();
 
   // Replace YOUR_FORMSPREE_ID with your actual Formspree form ID
   fetch('https://formspree.io/f/xlgonqgp', {
