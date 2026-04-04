@@ -473,12 +473,12 @@ function openCompare() {
   const tbl        = document.getElementById('compare-tbl');
   const bestRating = Math.max(...sel.map(c => c.rating));
   const rows = [
-    { label: 'Google rating', fn: c => c.rating.toFixed(1),  best: c => c.rating === bestRating },
-    { label: 'Warranty',      fn: c => c.warranty,           best: () => false },
-    { label: 'Coverage area', fn: c => c.states,             best: () => false },
     { label: 'Current offer', fn: c => c.offer     ? `<span class="offer-pill">${c.offer}</span>`         : '—', best: () => false },
     { label: 'Financing',     fn: c => c.financing ? `<span class="financing-pill">${c.financing}</span>` : '—', best: () => false },
     { label: 'Offer expires', fn: c => c.expires ? formatDate(c.expires) : 'No end date', best: () => false },
+    { label: 'Google rating', fn: c => c.rating.toFixed(1),  best: c => c.rating === bestRating },
+    { label: 'Warranty',      fn: c => c.warranty,           best: () => false },
+    { label: 'Coverage area', fn: c => c.states,             best: () => false },
   ];
   let html = '<thead><tr><th class="row-hdr" style="width:130px;">Category</th>';
   sel.forEach(c => {
