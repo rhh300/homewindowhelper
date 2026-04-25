@@ -54,6 +54,13 @@ exports.handler = async function () {
       };
     });
 
+    contractors.sort((a, b) => {
+      const aExp = a.expires ? new Date(a.expires).getTime() : Infinity;
+      const bExp = b.expires ? new Date(b.expires).getTime() : Infinity;
+      if (aExp !== bExp) return aExp - bExp;
+      return b.rating - a.rating;
+    });
+
     return {
       statusCode: 200,
       headers: { 'Content-Type': 'application/json' },
