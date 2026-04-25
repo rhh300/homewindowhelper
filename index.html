@@ -483,7 +483,7 @@ function openCompare() {
     { label: 'Warranty',      fn: c => c.warranty,           best: () => false },
     { label: 'Locations',     fn: c => c.locations,          best: () => false },
   ];
-  let html = '<thead><tr><th class="row-hdr" style="width:130px;">Category</th>';
+  let html = '<thead><tr><th class="row-hdr" style="width:130px;"></th>';
   sel.forEach(c => {
     html += `<th>${unlocked ? c.name : '<span style="filter:blur(6px);user-select:none;">' + c.name + '</span>'}</th>`;
   });
