@@ -146,6 +146,9 @@
   .gate-field input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(24,95,165,0.1); }
   .gate-submit { width: 100%; padding: 11px; background: var(--blue); color: #fff; border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; margin-top: 0.75rem; transition: background 0.15s; }
   .gate-submit:hover { background: var(--blue-dark); }
+  .gate-field input.invalid { border-color: #d0302f; box-shadow: 0 0 0 3px rgba(208,48,47,0.1); }
+  .gate-error { display: none; font-size: 11px; color: #d0302f; margin-top: 4px; }
+  .gate-error.visible { display: block; }
   .gate-disclaimer { font-size: 11px; color: var(--text-hint); text-align: center; margin-top: 10px; line-height: 1.5; }
   .gate-close { float: right; font-size: 20px; color: var(--text-muted); cursor: pointer; background: none; border: none; font-family: sans-serif; line-height: 1; margin-top: -4px; }
   .gate-close:hover { color: var(--text); }
@@ -226,10 +229,10 @@
         <div class="gate-icon">🔓</div>
         <div class="gate-title">Unlock all results</div>
         <div class="gate-sub">Enter your details to see which companies are behind these deals — and get matched with the best one for your project.</div>
-        <div class="gate-field"><label>Your name</label><input type="text" id="g-name" placeholder="Jane Smith" /></div>
-        <div class="gate-field"><label>Email address</label><input type="email" id="g-email" placeholder="jane@example.com" /></div>
-        <div class="gate-field"><label>Phone number</label><input type="tel" id="g-phone" placeholder="(555) 000-0000" /></div>
-        <div class="gate-field"><label>Zip code</label><input type="text" id="g-zip" placeholder="45202" /></div>
+        <div class="gate-field"><label>Your name</label><input type="text" id="g-name" placeholder="Jane Smith" /><span class="gate-error" id="err-name">Please enter your name.</span></div>
+        <div class="gate-field"><label>Email address</label><input type="email" id="g-email" placeholder="jane@example.com" /><span class="gate-error" id="err-email">Please enter a valid email address.</span></div>
+        <div class="gate-field"><label>Phone number</label><input type="tel" id="g-phone" placeholder="(555) 000-0000" /><span class="gate-error" id="err-phone">Please enter a valid 10-digit phone number.</span></div>
+        <div class="gate-field"><label>Zip code</label><input type="text" id="g-zip" placeholder="45202" /><span class="gate-error" id="err-zip">Please enter a valid 5-digit zip code.</span></div>
         <button class="gate-submit" onclick="unlock()">Reveal all results →</button>
         <div class="gate-disclaimer">By submitting, you may be contacted by matching contractors in your area. We never sell your data to unrelated parties.</div>
       </div>
@@ -509,6 +512,26 @@ function showGate() {
 function hideGate() { document.getElementById('gate-wrap').classList.remove('visible'); }
 
 function unlock() {
+  const name  = document.getElementById('g-name').value.trim();
+  const email = document.getElementById('g-email').value.trim();
+  const phone = document.getElementById('g-phone').value.replace(/\D/g, '');
+  const zip   = document.getElementById('g-zip').value.trim();
+
+  const rules = [
+    { id: 'g-name',  errId: 'err-name',  ok: name.length > 0 },
+    { id: 'g-email', errId: 'err-email', ok: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) },
+    { id: 'g-phone', errId: 'err-phone', ok: phone.length === 10 },
+    { id: 'g-zip',   errId: 'err-zip',   ok: /^\d{5}$/.test(zip) },
+  ];
+
+  let valid = true;
+  rules.forEach(({ id, errId, ok }) => {
+    document.getElementById(id).classList.toggle('invalid', !ok);
+    document.getElementById(errId).classList.toggle('visible', !ok);
+    if (!ok) valid = false;
+  });
+  if (!valid) return;
+
   unlocked = true;
   document.getElementById('gate-wrap').classList.remove('visible');
   document.getElementById('unlock-banner').classList.add('visible');
@@ -518,16 +541,10 @@ function unlock() {
   updateCompareBar();
   if (document.getElementById('compare-wrap').classList.contains('visible')) openCompare();
 
-  // Replace YOUR_FORMSPREE_ID with your actual Formspree form ID
   fetch('https://formspree.io/f/xlgonqgp', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name:  document.getElementById('g-name').value,
-      email: document.getElementById('g-email').value,
-      phone: document.getElementById('g-phone').value,
-      zip:   document.getElementById('g-zip').value,
-    }),
+    body: JSON.stringify({ name, email, phone, zip }),
   });
 }
 
