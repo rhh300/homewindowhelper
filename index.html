@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 <title>Home Window Helper — Find the Best Home Window Deals Online</title>
 <meta name="description" content="Compare promotions, financing offers, warranties and ratings across top window replacement contractors — all in one place. Free to use." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -540,6 +540,7 @@ function unlock() {
   renderAll();
   updateCompareBar();
   if (document.getElementById('compare-wrap').classList.contains('visible')) openCompare();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 
   fetch('https://formspree.io/f/xlgonqgp', {
     method: 'POST',
