@@ -290,7 +290,7 @@
         <span>Company</span>
         <span>Current offer</span>
         <span class="hide-mobile">Warranty</span>
-        <span class="hide-mobile">Coverage</span>
+        <span class="hide-mobile">Locations</span>
         <span class="hide-mobile">Expires</span>
         <span></span>
       </div>
@@ -382,14 +382,14 @@ function renderCards() {
       <div class="card-rating">
         <span class="stars">${starStr(c.rating)}</span>
         <span class="rating-val">${c.rating.toFixed(1)}</span>
-        <span class="rating-ct">Google rating</span>
+        <span class="rating-ct">Rating</span>
       </div>
       ${c.offer     ? `<div class="card-offer">${c.offer}</div>`         : ''}
       ${c.financing ? `<div class="card-financing">${c.financing}</div>` : ''}
       <div class="card-expires">${c.expires ? 'Offer ends: <span class="exp-date">' + formatDate(c.expires) + '</span>' : 'No listed end date'}</div>
       <div class="card-stats">
         <div class="stat-box"><div class="stat-lbl">Warranty</div><div class="stat-val">${c.warranty}</div></div>
-        <div class="stat-box"><div class="stat-lbl">Coverage</div><div class="stat-val">${c.states}</div></div>
+        <div class="stat-box"><div class="stat-lbl">Locations</div><div class="stat-val">${c.locations}</div></div>
       </div>
       <button class="card-cta" onclick="showGate()">See contractor →</button>
     `;
@@ -422,7 +422,7 @@ function renderList() {
       </div>
       <div class="list-offer">${c.offer || c.financing || '—'}</div>
       <div class="list-cell hide-mobile">${c.warranty}</div>
-      <div class="list-cell hide-mobile">${c.states}</div>
+      <div class="list-cell hide-mobile">${c.locations}</div>
       <div class="list-expires hide-mobile">${c.expires ? formatDate(c.expires) : '—'}</div>
       <button class="list-cta-btn" onclick="showGate()">See contractor →</button>
     `;
@@ -476,9 +476,9 @@ function openCompare() {
     { label: 'Current offer', fn: c => c.offer     ? `<span class="offer-pill">${c.offer}</span>`         : '—', best: () => false },
     { label: 'Financing',     fn: c => c.financing ? `<span class="financing-pill">${c.financing}</span>` : '—', best: () => false },
     { label: 'Offer expires', fn: c => c.expires ? formatDate(c.expires) : 'No end date', best: () => false },
-    { label: 'Google rating', fn: c => c.rating.toFixed(1),  best: c => c.rating === bestRating },
+    { label: 'Rating',        fn: c => c.rating.toFixed(1),  best: c => c.rating === bestRating },
     { label: 'Warranty',      fn: c => c.warranty,           best: () => false },
-    { label: 'Coverage area', fn: c => c.states,             best: () => false },
+    { label: 'Locations',     fn: c => c.locations,          best: () => false },
   ];
   let html = '<thead><tr><th class="row-hdr" style="width:130px;">Category</th>';
   sel.forEach(c => {
