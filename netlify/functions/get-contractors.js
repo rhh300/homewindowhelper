@@ -44,7 +44,7 @@ exports.handler = async function () {
         initials: f['Initials']      || '??',
         name:     f['Company Name']  || 'Unknown',
         url:      f['URL']           || '#',
-        warranty:  f['Warranty Summary'] || '—',
+        warranty:  f['Warranty'] || '—',
         locations: f['Locations']        || '—',
         rating:   parseFloat(f['Google Rating']) || 0,
         featured: f['Featured']      || false,
