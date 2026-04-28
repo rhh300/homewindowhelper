@@ -551,6 +551,10 @@ function unlock() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, email, phone, zip }),
   });
+  gtag('event', 'generate_lead', {
+    event_category: 'Lead Form',
+    event_label: 'Gate Unlock'
+  });
 }
 
 // ── VIEW TOGGLE ───────────────────────────────────────────────────────────────
