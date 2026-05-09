@@ -1,0 +1,6 @@
+[functions]
+  node_bundler = 'esbuild'
+
+[[scheduled-functions]]
+  name = 'refresh-contractors'
+  cron = '0 * * * *'
